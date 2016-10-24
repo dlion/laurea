@@ -117,7 +117,7 @@
 					</section>
 
 					<section data-background-video="video/droneVolante2Rotate.mp4" data-background-color="#000000" data-background-video-loop data-background-video-mute>
-						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
+						<div class="fragment fade-down" style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
 							<h2>Sensore ultrasonico HY-SRF05</h2>
 							<img width="450" height="300" data-src="img/sensore.jpg" alt="Sensore">
 							<p>Sfruttando il principio del sonar, consente di conoscere la distanza da un particolare ostacolo; usato per determinare la posizione del target consentendo al drone di fermarsi ed effettuare un landing sicuro</p>
@@ -146,205 +146,63 @@
 					</section>
 				</section>
 				<section>
-					<section data-background="#dddddd">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
+					<section>
+						<h2>Histogram backprojection</h2>
+						<p>Tecnica usata per identificare un oggetto all'interno di una immagine tramite il suo histogramma retroproiettato</p>
+						<img alt="target" data-src="img/target1.jpg">
+						<img alt="histo1" data-src="img/histo1.jpg">
+						<img alt="backproj" data-src="img/backproj.jpg">
 					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code class="hljs">&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Tiled Backgrounds</h2>
-						<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-					<section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-color="#000000">
-						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
-							<h2>Video Backgrounds</h2>
-							<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
-						</div>
-					</section>
-					<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
-						<h2>... and GIFs!</h2>
+					<section>
+						<ul>
+							<li class="fragment">Si ricavano gli histogrammi del target e del frame da analizzare</li>
+							<li class="fragment">Si ricava un terzo histogramma chiamato <em class="fragment highlight-red">Ration Histogram</em> facendo il rapporto fra i due histogrammi precedenti retroproiettandolo sul frame sostituendo i valori principali con i valori dell'histogramma risultante in quell'indice</li>
+							<li class="fragment">Si effettua una convoluzione di questa immagine risultante con una maschera di grandezza uguale a quella del nostro target</li>
+							<li class="fragment">Il picco nell'immagine convoluta ci indicherà la località in cui si trova il nostro target</li>
+						</ul>
+						<img height="400" alt="Flow" data-src="img/back.jpg">
 					</section>
 				</section>
-
-				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
-					</p>
-					<pre><code class="hljs">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
-				</section>
-
-				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						You can override background transitions per-slide.
-					</p>
-					<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
-				</section>
-
 				<section>
-					<h2>Pretty Code</h2>
-					<pre><code class="hljs" data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-					<p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
+					<h2>Meanshift</h2>
+					<p>Usato nel tracking di oggetti. Per ogni insieme di dati definisce una finestra di ricerca attorno ad essi calcolando la media, shiftando di volta in volta il punto centrale della finestra verso la locazione con maggiore densità, fino a raggiungere la convergenza.</p>
+					<p>Dopo ogni iterazione possiamo considerare che la finestra viene shiftata in una regione sempre più densa del dataset.</p>
+					<img style="float:left" width="700" height="350" alt="meanshift" data-src="img/meanshift.gif">
+					<p>I punti stazionari ottenuti dall'ascesa del gradiente rappresentano la moda della funzione di densità di probabilità, tutti i punti associati con lo stesso punto stazionario appartengono allo stesso cluster.</p>
+					<p>Un problema noto è che usando questo algoritmo la finestra di ricerca rimane invariata ad ogni iterazione...</p>
 				</section>
-
 				<section>
-					<h2>Marvelous List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
+					<h2>Camshift</h2>
+					<ol style="float:left; width: 50%">
+						<li class="fragment">Si definisce una ROI</li>
+						<li class="fragment">Si individua la posizione iniziale della finestra di ricerca dell'algoritmo Meanshift, la locazione e la distribuzione da seguire</li>
+						<li class="fragment">Si calcola la distribuzione di probabilità del colore della regione centrata dalla finestra di ricerca del Meanshift</li>
+						<li class="fragment">Si itera il Meanshift per trovare il centroide della probabilità dell'immagine, viene salvata l'area di distribuzione e la locazione del centroide.</li>
+						<li class="fragment">Per il frame successivo si centra la finestra di ricerca nella posizione media trovata precedentemente e si imposta la dimensione della finestra per poi tornare allo step 3</li>
 					</ol>
+					<img style="float: right;" width="650" height="600" alt="camshift" data-src="img/camshift.jpg">
 				</section>
-
 				<section>
-					<h2>Tabular Tables</h2>
-					<table>
-						<thead>
-							<tr>
-								<th>Item</th>
-								<th>Value</th>
-								<th>Quantity</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Apples</td>
-								<td>$1</td>
-								<td>7</td>
-							</tr>
-							<tr>
-								<td>Lemonade</td>
-								<td>$2</td>
-								<td>18</td>
-							</tr>
-							<tr>
-								<td>Bread</td>
-								<td>$3</td>
-								<td>2</td>
-							</tr>
-						</tbody>
-					</table>
+					<h2>MAVLink</h2>
+					<img width="900" data-src="img/mavlink.jpg" alt="MavLink">
+					<p>Protocollo di comunicazione usato per far comunicare piccoli veicoli aerei con le stazioni base di terra.</p>
+					<p>La dimensione ridotta dei pacchetti permette al MavLink di prestarsi in maniera ottimale a quello che dovrebbe essere uno scambio di dati molto veloce e stabile.</p>
 				</section>
-
 				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-					</blockquote>
-				</section>
-
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Speaker View</h2>
-					<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
-					<p>Press the <em>S</em> key to try it out.</p>
-
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
-
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
-					<iframe data-src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-				</section>
-
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the page background.
-					</p>
-				</section>
-
-				<section data-state="customevent">
-					<h2>State Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
-					</p>
-				</section>
-
-				<section>
-					<h2>Much more</h2>
-					<ul>
-						<li>Right-to-left support</li>
-						<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
+					<h2>Schema Progettuale</h2>
+					<ul style="width:50%; float: left">
+						<li class="fragment"><span style="color: red">GCS</span>: Tramite BLE avvia il drone</li>
+						<li class="fragment"><span style="color: red">BLE</span>: Modulo di comunicare collegato alla NUCLEO</li>
+						<li class="fragment"><span style="color: red">NUCLEO</span>: Microcontrollore per interfacciare il sensore ultrasonico e il BLE con la Raspberry Pi tramite seriale</li>
+						<li class="fragment"><span style="color: red">HY-SRF05</span>: Sensore ultrasonico interfacciato alla NUCLEO per l'identificazione di ostacoli o del raggiungimento del target</li>
+						<li class="fragment"><span style="color: red">CAM</span>: Collegata alla Raspberry Pi tramite USB</li>
+						<li class="fragment"><span style="color: red">Raspberry Pi</span>: Cervello del progetto, permette l'interfacciamento con tutte le perifiche</li>
+						<li class="fragment"><span style="color: red">PixHawk</span>: Comanda i motori del drone, interfacciata alla Raspberry Pi per ricevere i comandi di volo ed inviare informazioni</li>
+						<li class="fragment"><span style="color: red">Multi-rotore</span>: Il drone quadricottero da pilotare</li>
 					</ul>
+					<img data-src="img/schema.jpg" alt="Schema" width="700" height="500" style="float: right">
 				</section>
-
-				<section style="text-align: left;">
-					<h1>THE END</h1>
-					<p>
-						- <a href="http://slides.com">Try the online editor</a> <br>
-						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
-					</p>
-				</section>
-
 			</div>
-
 		</div>
 
 		<script src="lib/js/head.min.js"></script>
@@ -354,6 +212,7 @@ Reveal.addEventListener( 'customevent', function() {
 
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
+				width:1500,
 				controls: true,
 				progress: true,
 				history: true,
